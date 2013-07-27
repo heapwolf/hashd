@@ -1,5 +1,5 @@
 # SYNOPSIS
-hash all the files in a specified path, appreciate .ignore files. uses `sha1` by default.
+hash all the files recursively from a specified path, appreciate .ignore files. uses `sha1` by default.
 
 # USAGE
 
