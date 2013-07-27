@@ -1,0 +1,13 @@
+{
+  "name": "hashd",
+  "version": "0.0.1",
+  "description": "hash all the files in a specified path, appreciate .ignore files",
+  "main": "index.js",
+  "bin": "./bin/hashd",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fstream-ignore": "0.0.7",
+    "optimist": "~0.6.0"
+  }
+}
