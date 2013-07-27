@@ -1,7 +1,7 @@
 {
   "name": "hashd",
   "version": "0.0.1",
-  "description": "hash all the files in a specified path, appreciate .ignore files",
+  "description": "hash all the files recursively from a specified path, appreciate .ignore files. uses `sha1` by default.",
   "main": "index.js",
   "bin": "./bin/hashd",
   "author": "",
