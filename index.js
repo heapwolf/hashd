@@ -14,7 +14,7 @@ function hashd(path, opts, callback) {
   ignore({ path: path, ignoreFiles: opts.ignores })
     .on('child', function (child) {
       if (child.type !== 'Directory') {
-        shasum.update(fs.readFileSync(child.path).toString('utf8'))
+        shasum.update(fs.readFileSync(child.path, { encoding: 'utf8' }))
       }
     })
     .on('error', function(err) {
