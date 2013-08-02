@@ -11,10 +11,19 @@ function hashd(p, opts) {
 
   if (opts.ignores && !Array.isArray(opts.ignores)) {
     opts.ignores = opts.ignores.split(' ')
+  }
 
+  if (opts.ignores) {
     opts.ignores.forEach(function(file) {
 
-      var set = fs.readFileSync(path.join(p, file)).toString().split(/\r?\n/)
+      var set
+
+      try {
+        set = fs.readFileSync(path.join(p, file)).toString().split(/\r?\n/)
+      }
+      catch (ex) {
+        return
+      }
 
       set = set.filter(function (s) {
         s = s.trim()
@@ -31,9 +40,13 @@ function hashd(p, opts) {
 
   var mmopt = { matchBase: true, dot: true, flipNegate: true }
 
-  var mm = rules.map(function (s) {
-    var m = new Minimatch(s, mmopt)
-    return m
+  var mm = {}
+
+  rules.map(function (s) {
+    if (s[s.length] === '/') {
+      s = s.slice(0, -1)
+    }
+    mm[s] = new Minimatch(s, mmopt)
   })
 
   function read(p) {
@@ -44,10 +57,12 @@ function hashd(p, opts) {
 
       var d = path.join(p, item)
 
-      if(mm.filter(function(m) {
-        return m.match(d)
-      }).length) {
-        return
+      if (Object.keys(mm).some(function(m) {
+        if (m.match(item)) {
+          return true
+        }
+      })) {
+        return true
       }
 
       var stat = fs.statSync(d)
