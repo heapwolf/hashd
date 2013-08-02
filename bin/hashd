@@ -2,10 +2,5 @@
 var path = require('path')
 var argv = require('optimist').argv
 var hashd = require(path.join('..', 'index'))
-hashd(argv._[0] || process.cwd(), argv, function(err, hash) {
 
-  if (err && err.errno === 34) {
-    return console.log('ERR: no such directory!')
-  }
-  process.stdout.write(err || hash)
-})
+process.stdout.write(hashd(argv._[0] || process.cwd(), argv))

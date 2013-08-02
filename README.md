@@ -6,9 +6,8 @@ hash all the files recursively from a specified path, appreciate .ignore files. 
 ### Use as a lib
 ```js
 var hashd = require('hashd')
-hashd('./path/to/files', { algorithm: 'md5', ignore: ['.gitignore', '.npmignore'] }, function(err, md5) {
-  console.log(md5)
-})
+var hash = hashd('./path/to/files', { algorithm: 'md5', ignore: ['.gitignore', '.npmignore'] })
+console.log(hash)
 ```
 
 ### Use from the cli
