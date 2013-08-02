@@ -7,7 +7,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "fstream-ignore": "0.0.7",
     "optimist": "~0.6.0",
     "minimatch": "~0.2.12",
     "uniq": "0.0.2"
