@@ -6,15 +6,17 @@ var Minimatch = require("minimatch").Minimatch
 
 function hashd(p, opts) {
 
+  var opts = opts || {}
   var shasum = crypto.createHash(opts.algorithm || 'sha1')
   var rules = []
 
-  if (opts.ignores && !Array.isArray(opts.ignores)) {
-    opts.ignores = opts.ignores.split(' ')
+  // todo, parse cmdline files as CSV?
+  if (opts.files && !Array.isArray(opts.files)) {
+    opts.files = opts.files.split(' ')
   }
 
-  if (opts.ignores) {
-    opts.ignores.forEach(function(file) {
+  if (opts.files) {
+    opts.files.forEach(function(file) {
 
       var set
 
@@ -38,14 +40,20 @@ function hashd(p, opts) {
     rules = uniq(rules)
   }
 
-  var mmopt = { matchBase: true, dot: true, flipNegate: true }
+  // todo, parse cmdline patterns as CSV?
+  if (opts.patterns && !Array.isArray(opts.patterns)) {
+    opts.patterns = opts.patterns.split(' ')
+  }
 
+  if (opts.patterns) {
+    rules = rules.concat(opts.patterns)
+    rules = uniq(rules)
+  }
+
+  var mmopt = { matchBase: true, dot: true, flipNegate: true }
   var mm = {}
 
   rules.map(function (s) {
-    if (s[s.length] === '/') {
-      s = s.slice(0, -1)
-    }
     mm[s] = new Minimatch(s, mmopt)
   })
 
@@ -56,18 +64,23 @@ function hashd(p, opts) {
     items.forEach(function(item) {
 
       var d = path.join(p, item)
+      var isDirectory = fs.statSync(d).isDirectory()
 
       if (Object.keys(mm).some(function(m) {
-        if (m.match(item)) {
+
+        if (isDirectory) {
+          item = item + '/'
+        }
+
+        if (mm[m].match(item)) {
           return true
         }
       })) {
         return true
       }
+      console.log(d)
 
-      var stat = fs.statSync(d)
-
-      if (stat.isDirectory()) {
+      if (isDirectory) {
         return read(d)
       }
       shasum.update(fs.readFileSync(d, { encoding: 'utf8' }))
@@ -75,7 +88,7 @@ function hashd(p, opts) {
   }
 
   read(p)
-  return shasum.digest('hex')
+  return shasum.digest(opts.encoding || 'hex')
 }
 
 module.exports = hashd

@@ -1,14 +1,36 @@
 {
   "name": "hashd",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "hash all the files recursively from a specified path, appreciate .ignore files. uses `sha1` by default.",
   "main": "index.js",
-  "bin": "./bin/hashd",
-  "author": "",
+  "bin": {
+    "hashd": "./bin/hashd"
+  },
   "license": "MIT",
+  "author": "Paolo Fragomeni <paolo@async.ly> (http://twitter.com/hij1nx)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hij1nx/hashd.git"
+  },
   "dependencies": {
     "optimist": "~0.6.0",
     "minimatch": "~0.2.12",
     "uniq": "0.0.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/hij1nx/hashd/issues"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node ./test/test.js"
+  },
+  "keywords": [
+    "hash",
+    "recursive",
+    "file",
+    "tree"
+  ]
 }
