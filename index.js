@@ -78,7 +78,6 @@ function hashd(p, opts) {
       })) {
         return true
       }
-      console.log(d)
 
       if (isDirectory) {
         return read(d)
