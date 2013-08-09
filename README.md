@@ -6,15 +6,20 @@ in a predictable order. Appreciate `.ignore` glob `files` & `patterns`.
 Uses `sha1` by default; use `openssl list-message-digest-algorithms`
 for a list of supported algorithms.
 
-### Use as a lib
+### lib
 ```js
 var hashd = require('hashd')
-var opts = { algorithm: 'md5', files: ['.gitignore', '.npmignore'], patterns: ['*.txt'] }
-var hash = hashd('./path', opts)
+
+var hash = hashd('./path', {
+  algorithm: 'md5',
+  files: ['.gitignore', '.npmignore'],
+  patterns: ['*.txt']
+})
+
 console.log(hash)
 ```
 
-### Use from the cli
+### cli
 ```bash
 npm install hashd -g
 hashd ./path --algorithm sha1 --files '.gitignore .npmignore' --patterns '*.gz'
